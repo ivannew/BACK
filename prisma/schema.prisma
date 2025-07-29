@@ -1,0 +1,27 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model song {
+  id      Int     @id @default(autoincrement())
+  title   String
+  artist  String
+  album   String?
+  year    Int?
+  imagen  String?
+
+  @@map("songs")   // Aquí indicamos la tabla en plural
+}
+
+model artist {
+  id     Int    @id @default(autoincrement())
+  name   String
+  image  String?
+
+  @@map("artists") // Tabla plural en la base
+}
