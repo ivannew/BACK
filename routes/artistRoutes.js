@@ -1,7 +1,19 @@
 const express = require('express');
-const router = express.Router();
-const { getArtists } = require('../controllers/artistController');
 
-router.get('/artists', getArtists);
+module.exports = (pool) => {
+  const router = express.Router();
 
-module.exports = router;
+  router.get('/artists', async (req, res) => {
+    try {
+      const result = await pool.query('SELECT * FROM artists');
+      res.json(result.rows);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error al obtener artistas' });
+    }
+  });
+
+  // Más rutas...
+
+  return router;
+};
